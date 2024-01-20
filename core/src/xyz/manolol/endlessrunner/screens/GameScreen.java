@@ -1,5 +1,7 @@
 package xyz.manolol.endlessrunner.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,18 +11,22 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import xyz.manolol.endlessrunner.Main;
 
-import java.awt.*;
-
 public class GameScreen extends ScreenAdapter {
     Main main;
     OrthographicCamera camera;
     FitViewport viewport;
     ShapeRenderer shapeRenderer;
 
+    private final float GRAVITY = 300.0f;
+    private final float JUMP_FORCE = 400.0f;
+    private final float JUMP_FORCE_DECREASE = 600.0f;
+
     private final float FLOOR_HEIGHT = 50;
     private final float PLAYER_SIZE = 50;
 
     private Rectangle player;
+
+    private float jumpForceLeft = 0;
 
     @Override
     public void show() {
@@ -34,6 +40,23 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+
+        //**** UPDATE ****//
+
+        if (player.y > FLOOR_HEIGHT) player.y -= GRAVITY * delta;
+
+        if ((Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched()) && player.y <= FLOOR_HEIGHT) {
+            jumpForceLeft = JUMP_FORCE + GRAVITY;
+        }
+
+        if (jumpForceLeft >= 0) {
+            player.y += jumpForceLeft * delta;
+            jumpForceLeft -= JUMP_FORCE_DECREASE * delta;
+        }
+
+
+        //**** RENDERING ****//
+
         ScreenUtils.clear(0, 0, 0, 0);
         camera.update();
 
