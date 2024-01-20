@@ -6,6 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -20,15 +21,20 @@ public class GameScreen extends ScreenAdapter {
     FitViewport viewport;
     ShapeRenderer shapeRenderer;
 
-    private final float GRAVITY = 300.0f;
-    private final float JUMP_FORCE = 400.0f;
+    private final float GRAVITY = 400.0f;
+    private final float JUMP_FORCE = 350.0f;
     private final float JUMP_FORCE_DECREASE = 600.0f;
 
     private final float OBSTACLE_SPEED_START = 200.0f;
+    private final float OBSTACLE_SPEED_INCREASE = 20.0f;
+    private final float OBSTACLE_DISTANCE_START = 1000.0f;
+
+    private final float DIFFICULTY_INCREASE_INTERVAL = 3.0f;
+
 
     private final float FLOOR_HEIGHT = 50;
     private final float PLAYER_SIZE = 50;
-    private final float OBSTACLE_SIZE = 50;
+    private final float OBSTACLE_SIZE = 40;
 
     private Rectangle player;
 
@@ -37,6 +43,10 @@ public class GameScreen extends ScreenAdapter {
     private float jumpForceLeft = 0;
 
     private float obstacleSpeed =  OBSTACLE_SPEED_START;
+    private float obstacleDistance = OBSTACLE_DISTANCE_START;
+
+    private float timeUntilDifficultyIncrease = DIFFICULTY_INCREASE_INTERVAL;
+
 
     @Override
     public void show() {
@@ -50,6 +60,7 @@ public class GameScreen extends ScreenAdapter {
         obstacles = new Array<>();
 
         spawnObstacle(viewport.getWorldWidth() / 2);
+        spawnObstacle(viewport.getWorldWidth() / 1.1f);
     }
 
     @Override
@@ -62,11 +73,23 @@ public class GameScreen extends ScreenAdapter {
         if ((Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched()) && player.y <= FLOOR_HEIGHT) {
             jumpForceLeft = JUMP_FORCE + GRAVITY;
         }
-
         if (jumpForceLeft >= 0) {
             player.y += jumpForceLeft * delta;
             jumpForceLeft -= JUMP_FORCE_DECREASE * delta;
         }
+
+        timeUntilDifficultyIncrease -= delta;
+
+        if (timeUntilDifficultyIncrease <= 0) {
+            obstacleSpeed += OBSTACLE_SPEED_INCREASE;
+            obstacleDistance += OBSTACLE_SPEED_INCREASE;
+            timeUntilDifficultyIncrease = DIFFICULTY_INCREASE_INTERVAL;
+        }
+
+        if (obstacles.peek().x < viewport.getWorldWidth() - (obstacleDistance + MathUtils.random(-50.0f, +50.0f))) {
+            spawnObstacle(viewport.getWorldWidth());
+        }
+
 
         for (Iterator<Rectangle> i = obstacles.iterator(); i.hasNext(); ) {
             Rectangle obstacle = i.next();
