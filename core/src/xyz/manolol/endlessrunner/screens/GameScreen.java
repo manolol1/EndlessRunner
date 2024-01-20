@@ -13,6 +13,8 @@ public class GameScreen extends ScreenAdapter {
     FitViewport viewport;
     ShapeRenderer shapeRenderer;
 
+    private final int FLOOR_HEIGHT = 50;
+
     @Override
     public void show() {
         main = new Main();
@@ -29,7 +31,8 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        shapeRenderer.rect(20, 20, 100, 100);
+        // floor
+        shapeRenderer.rect(0, 0, viewport.getWorldWidth(), FLOOR_HEIGHT);
 
         shapeRenderer.end();
     }
