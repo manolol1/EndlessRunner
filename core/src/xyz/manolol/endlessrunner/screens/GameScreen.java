@@ -7,9 +7,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import xyz.manolol.endlessrunner.Main;
+
+import java.util.Iterator;
 
 public class GameScreen extends ScreenAdapter {
     Main main;
@@ -21,12 +24,19 @@ public class GameScreen extends ScreenAdapter {
     private final float JUMP_FORCE = 400.0f;
     private final float JUMP_FORCE_DECREASE = 600.0f;
 
+    private final float OBSTACLE_SPEED_START = 200.0f;
+
     private final float FLOOR_HEIGHT = 50;
     private final float PLAYER_SIZE = 50;
+    private final float OBSTACLE_SIZE = 50;
 
     private Rectangle player;
 
+    private Array<Rectangle> obstacles;
+
     private float jumpForceLeft = 0;
+
+    private float obstacleSpeed =  OBSTACLE_SPEED_START;
 
     @Override
     public void show() {
@@ -36,6 +46,10 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer = new ShapeRenderer();
 
         player = new Rectangle(50, FLOOR_HEIGHT, PLAYER_SIZE, PLAYER_SIZE);
+
+        obstacles = new Array<>();
+
+        spawnObstacle(viewport.getWorldWidth() / 2);
     }
 
     @Override
@@ -52,6 +66,16 @@ public class GameScreen extends ScreenAdapter {
         if (jumpForceLeft >= 0) {
             player.y += jumpForceLeft * delta;
             jumpForceLeft -= JUMP_FORCE_DECREASE * delta;
+        }
+
+        for (Iterator<Rectangle> i = obstacles.iterator(); i.hasNext(); ) {
+            Rectangle obstacle = i.next();
+
+            obstacle.x -= obstacleSpeed * delta;
+
+            if (obstacle.overlaps(player)) {
+                System.out.println("Game Over");
+            }
         }
 
 
@@ -71,7 +95,17 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer.setColor(Color.FOREST);
         shapeRenderer.rect(player.x, player.y, player.width, player.height);
 
+        // obstacles
+        shapeRenderer.setColor(Color.FIREBRICK);
+        for (Rectangle obstacle : obstacles) {
+            shapeRenderer.rect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+        }
+
         shapeRenderer.end();
+    }
+
+    private void spawnObstacle(float xPosition) {
+        obstacles.add(new Rectangle(xPosition, FLOOR_HEIGHT, OBSTACLE_SIZE, OBSTACLE_SIZE));
     }
 
     @Override
