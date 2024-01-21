@@ -23,13 +23,13 @@ public class GameScreen extends ScreenAdapter {
 
     private final float GRAVITY = 400.0f;
     private final float JUMP_FORCE = 350.0f;
-    private final float JUMP_FORCE_DECREASE = 600.0f;
+    private final float JUMP_FORCE_DECREASE = 700.0f;
 
     private final float OBSTACLE_SPEED_START = 200.0f;
-    private final float OBSTACLE_SPEED_INCREASE = 20.0f;
+    private final float OBSTACLE_SPEED_INCREASE = 30.0f;
     private final float OBSTACLE_DISTANCE_START = 1000.0f;
 
-    private final float DIFFICULTY_INCREASE_INTERVAL = 3.0f;
+    private final float DIFFICULTY_INCREASE_INTERVAL = 2.5f;
 
 
     private final float FLOOR_HEIGHT = 50;
@@ -82,11 +82,11 @@ public class GameScreen extends ScreenAdapter {
 
         if (timeUntilDifficultyIncrease <= 0) {
             obstacleSpeed += OBSTACLE_SPEED_INCREASE;
-            obstacleDistance += OBSTACLE_SPEED_INCREASE;
+            obstacleDistance += OBSTACLE_SPEED_INCREASE - 2;
             timeUntilDifficultyIncrease = DIFFICULTY_INCREASE_INTERVAL;
         }
 
-        if (obstacles.peek().x < viewport.getWorldWidth() - (obstacleDistance + MathUtils.random(-50.0f, +50.0f))) {
+        if (obstacles.peek().x < viewport.getWorldWidth() - (obstacleDistance + MathUtils.random(-250.0f, +200.0f))) {
             spawnObstacle(viewport.getWorldWidth());
         }
 
