@@ -31,7 +31,6 @@ public class GameScreen extends ScreenAdapter {
 
     private final float DIFFICULTY_INCREASE_INTERVAL = 2.5f;
 
-
     private final float FLOOR_HEIGHT = 50;
     private final float PLAYER_SIZE = 50;
     private final float OBSTACLE_SIZE = 40;
@@ -46,7 +45,6 @@ public class GameScreen extends ScreenAdapter {
     private float obstacleDistance = OBSTACLE_DISTANCE_START;
 
     private float timeUntilDifficultyIncrease = DIFFICULTY_INCREASE_INTERVAL;
-
 
     @Override
     public void show() {
@@ -68,6 +66,7 @@ public class GameScreen extends ScreenAdapter {
 
         //**** UPDATE ****//
 
+        // Player movement (Jump)
         if (player.y > FLOOR_HEIGHT) player.y -= GRAVITY * delta;
 
         if ((Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched()) && player.y <= FLOOR_HEIGHT) {
@@ -78,6 +77,7 @@ public class GameScreen extends ScreenAdapter {
             jumpForceLeft -= JUMP_FORCE_DECREASE * delta;
         }
 
+        // Difficulty Increase
         timeUntilDifficultyIncrease -= delta;
 
         if (timeUntilDifficultyIncrease <= 0) {
@@ -86,11 +86,12 @@ public class GameScreen extends ScreenAdapter {
             timeUntilDifficultyIncrease = DIFFICULTY_INCREASE_INTERVAL;
         }
 
+        // Remove obstacles that are no longer on screen
         if (obstacles.peek().x < viewport.getWorldWidth() - (obstacleDistance + MathUtils.random(-250.0f, +200.0f))) {
             spawnObstacle(viewport.getWorldWidth());
         }
 
-
+        // Update obstacle positions
         for (Iterator<Rectangle> i = obstacles.iterator(); i.hasNext(); ) {
             Rectangle obstacle = i.next();
 
