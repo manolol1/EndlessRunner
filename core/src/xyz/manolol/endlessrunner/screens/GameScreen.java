@@ -92,9 +92,7 @@ public class GameScreen extends ScreenAdapter {
         }
 
         // Update obstacle positions
-        for (Iterator<Rectangle> i = obstacles.iterator(); i.hasNext(); ) {
-            Rectangle obstacle = i.next();
-
+        for (Rectangle obstacle : obstacles) {
             obstacle.x -= obstacleSpeed * delta;
 
             if (obstacle.overlaps(player)) {
