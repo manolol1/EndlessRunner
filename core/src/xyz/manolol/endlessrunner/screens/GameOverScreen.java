@@ -20,6 +20,7 @@ import xyz.manolol.endlessrunner.Utils.FontManager;
 public class GameOverScreen extends ScreenAdapter {
 
     private final Main main;
+    private final int score;
 
     private final FontManager fontManager;
 
@@ -29,8 +30,9 @@ public class GameOverScreen extends ScreenAdapter {
     private final Stage stage;
     private final VisTable table;
 
-    public GameOverScreen(Main main) {
+    public GameOverScreen(Main main, int score) {
         this.main = main;
+        this.score = score;
 
         fontManager = new FontManager("fonts/Ubuntu-Regular.ttf");
 
@@ -43,14 +45,19 @@ public class GameOverScreen extends ScreenAdapter {
         table = new VisTable();
         table.setFillParent(true);
 
-        // Get the default styles
-        VisLabel.LabelStyle labelStyle = VisUI.getSkin().get(Label.LabelStyle.class);
         VisTextButton.VisTextButtonStyle textButtonStyle = VisUI.getSkin().get(VisTextButton.VisTextButtonStyle.class);
 
-        labelStyle.font = fontManager.getFont(120);
-        labelStyle.fontColor = Color.RED;
-        VisLabel label1 = new VisLabel("GAME OVER", labelStyle);
-        table.add(label1).pad(100).row();
+        Label.LabelStyle labelStyle1 = new Label.LabelStyle();
+        labelStyle1.font = fontManager.getFont(120);
+        labelStyle1.fontColor = Color.RED;
+        VisLabel label1 = new VisLabel("GAME OVER", labelStyle1);
+        table.add(label1).pad(0).row();
+
+        Label.LabelStyle labelStyle2 = new Label.LabelStyle();
+        labelStyle2.font = fontManager.getFont(80);
+        labelStyle2.fontColor = Color.WHITE;
+        VisLabel label2 = new VisLabel("Score: " + score, labelStyle2);
+        table.add(label2).pad(50).row();
 
         textButtonStyle.font = fontManager.getFont(80);
         VisTextButton restartButton = new VisTextButton("Try Again", textButtonStyle);
@@ -76,9 +83,7 @@ public class GameOverScreen extends ScreenAdapter {
         });
         table.add(mainMenuButton).width(500);
 
-        table.padBottom(200); // move the whole table up a little bit
-
-        table.padBottom(200); // move the whole table up a little bit
+        table.padBottom(100); // move the whole table up a little bit
 
         stage.addActor(table);
     }

@@ -43,7 +43,7 @@ public class MainMenuScreen extends ScreenAdapter {
         table.setFillParent(true);
 
         // Get the default styles
-        VisLabel.LabelStyle labelStyle = VisUI.getSkin().get(Label.LabelStyle.class);
+        VisLabel.LabelStyle labelStyle = new Label.LabelStyle();
         VisTextButton.VisTextButtonStyle textButtonStyle = VisUI.getSkin().get(VisTextButton.VisTextButtonStyle.class);
 
         labelStyle.font = fontManager.getFont(120);

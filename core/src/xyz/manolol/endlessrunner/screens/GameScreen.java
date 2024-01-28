@@ -8,16 +8,26 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.kotcrab.vis.ui.widget.VisLabel;
+import com.kotcrab.vis.ui.widget.VisTable;
 import xyz.manolol.endlessrunner.Main;
+import xyz.manolol.endlessrunner.Utils.FontManager;
 
 public class GameScreen extends ScreenAdapter {
     Main main;
     OrthographicCamera camera;
     FitViewport viewport;
     ShapeRenderer shapeRenderer;
+
+    private final FontManager fontManager;
+    private final Stage stage;
+    private final VisTable table;
+    private VisLabel scoreLabel;
 
     private final float GRAVITY = 400.0f;
     private final float JUMP_FORCE = 350.0f;
@@ -44,6 +54,8 @@ public class GameScreen extends ScreenAdapter {
 
     private float timeUntilDifficultyIncrease = DIFFICULTY_INCREASE_INTERVAL;
 
+    private int score = 0; // increases when obstacle leaves the screen
+
     public GameScreen(Main main) {
         this.main = main;
         camera = new OrthographicCamera();
@@ -56,6 +68,22 @@ public class GameScreen extends ScreenAdapter {
 
         spawnObstacle(viewport.getWorldWidth() / 2);
         spawnObstacle(viewport.getWorldWidth() / 1.1f);
+
+        // User Interface //
+        fontManager = new FontManager("fonts/Ubuntu-Regular.ttf");
+        stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
+        table = new VisTable();
+        table.setFillParent(true);
+        table.top().right();
+
+        VisLabel.LabelStyle labelStyle = new Label.LabelStyle();
+
+        labelStyle.font = fontManager.getFont(80);
+        scoreLabel = new VisLabel("", labelStyle);
+        table.add(scoreLabel).pad(50);
+
+        stage.addActor(table);
     }
 
     @Override
@@ -86,6 +114,7 @@ public class GameScreen extends ScreenAdapter {
         // Remove obstacles that are no longer on screen
         if (obstacles.peek().x < viewport.getWorldWidth() - (obstacleDistance + MathUtils.random(-250.0f, +200.0f))) {
             spawnObstacle(viewport.getWorldWidth());
+            score++;
         }
 
         // Update obstacle positions
@@ -93,10 +122,13 @@ public class GameScreen extends ScreenAdapter {
             obstacle.x -= obstacleSpeed * delta;
 
             if (obstacle.overlaps(player)) {
-                main.setScreen(new GameOverScreen(main));
+                main.setScreen(new GameOverScreen(main, score));
                 return;
             }
         }
+
+        // Update Score label
+        scoreLabel.setText(score);
 
 
         //**** RENDERING ****//
@@ -120,6 +152,10 @@ public class GameScreen extends ScreenAdapter {
         for (Rectangle obstacle : obstacles) {
             shapeRenderer.rect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
         }
+
+        // UI
+        stage.act(delta);
+        stage.draw();
 
         shapeRenderer.end();
     }
