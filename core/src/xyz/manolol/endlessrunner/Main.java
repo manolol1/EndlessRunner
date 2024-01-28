@@ -8,7 +8,7 @@ public class Main extends Game {
     @Override
     public void create() {
         VisUI.load();
-        this.setScreen(new GameOverScreen(this));
+        this.setScreen(new MainMenuScreen(this));
     }
 
     @Override

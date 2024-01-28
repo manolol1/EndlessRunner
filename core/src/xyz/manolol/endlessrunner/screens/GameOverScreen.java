@@ -48,8 +48,8 @@ public class GameOverScreen extends ScreenAdapter {
         VisTextButton.VisTextButtonStyle textButtonStyle = VisUI.getSkin().get(VisTextButton.VisTextButtonStyle.class);
 
         labelStyle.font = fontManager.getFont(100);
-        VisLabel label1 = new VisLabel("GAME OVER");
-        label1.setColor(Color.RED);
+        labelStyle.fontColor = Color.RED;
+        VisLabel label1 = new VisLabel("GAME OVER", labelStyle);
         table.add(label1).pad(100).row();
 
         textButtonStyle.font = fontManager.getFont(80);
