@@ -93,7 +93,8 @@ public class GameScreen extends ScreenAdapter {
             obstacle.x -= obstacleSpeed * delta;
 
             if (obstacle.overlaps(player)) {
-                System.out.println("Game Over");
+                main.setScreen(new GameOverScreen(main));
+                return;
             }
         }
 

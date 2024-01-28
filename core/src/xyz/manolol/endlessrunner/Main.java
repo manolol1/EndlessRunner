@@ -1,11 +1,18 @@
 package xyz.manolol.endlessrunner;
 
 import com.badlogic.gdx.Game;
-import xyz.manolol.endlessrunner.screens.MainMenuScreen;
+import com.kotcrab.vis.ui.VisUI;
+import xyz.manolol.endlessrunner.screens.*;
 
 public class Main extends Game {
     @Override
     public void create() {
-        this.setScreen(new MainMenuScreen(this));
+        VisUI.load();
+        this.setScreen(new GameOverScreen(this));
+    }
+
+    @Override
+    public void dispose() {
+        VisUI.dispose();
     }
 }

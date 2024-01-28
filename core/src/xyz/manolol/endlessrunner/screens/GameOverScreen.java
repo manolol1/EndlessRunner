@@ -17,7 +17,8 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 import xyz.manolol.endlessrunner.Main;
 import xyz.manolol.endlessrunner.Utils.FontManager;
 
-public class MainMenuScreen extends ScreenAdapter {
+public class GameOverScreen extends ScreenAdapter {
+
     private final Main main;
 
     private final FontManager fontManager;
@@ -28,7 +29,7 @@ public class MainMenuScreen extends ScreenAdapter {
     private final Stage stage;
     private final VisTable table;
 
-    public MainMenuScreen(Main main) {
+    public GameOverScreen(Main main) {
         this.main = main;
 
         fontManager = new FontManager("fonts/Ubuntu-Regular.ttf");
@@ -47,20 +48,33 @@ public class MainMenuScreen extends ScreenAdapter {
         VisTextButton.VisTextButtonStyle textButtonStyle = VisUI.getSkin().get(VisTextButton.VisTextButtonStyle.class);
 
         labelStyle.font = fontManager.getFont(100);
-        labelStyle.fontColor = Color.LIME;
-        VisLabel label1 = new VisLabel("Endless Runner", labelStyle);
+        VisLabel label1 = new VisLabel("GAME OVER");
+        label1.setColor(Color.RED);
         table.add(label1).pad(100).row();
 
         textButtonStyle.font = fontManager.getFont(80);
-        VisTextButton startButton = new VisTextButton("Start Game", textButtonStyle);
-        startButton.pad(20);
-        startButton.addListener(new ClickListener() {
+        VisTextButton restartButton = new VisTextButton("Try Again!", textButtonStyle);
+        restartButton.pad(20);
+        restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 main.setScreen(new GameScreen(main));
             }
         });
-        table.add(startButton);
+        table.add(restartButton).pad(50).row();
+
+        textButtonStyle.font = fontManager.getFont(80);
+        VisTextButton mainMenuButton = new VisTextButton("Back to Main Menu", textButtonStyle);
+        mainMenuButton.pad(20);
+        mainMenuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                main.setScreen(new MainMenuScreen(main));
+            }
+        });
+        table.add(mainMenuButton);
+
+        table.padBottom(200); // move the whole table up a little bit
 
         table.padBottom(200); // move the whole table up a little bit
 
