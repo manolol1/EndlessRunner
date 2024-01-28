@@ -111,7 +111,7 @@ public class GameScreen extends ScreenAdapter {
             timeUntilDifficultyIncrease = DIFFICULTY_INCREASE_INTERVAL;
         }
 
-        // Remove obstacles that are no longer on screen
+        // Spawn new Obstacles
         if (obstacles.peek().x < viewport.getWorldWidth() - (obstacleDistance + MathUtils.random(-250.0f, +200.0f))) {
             spawnObstacle(viewport.getWorldWidth());
             score++;
