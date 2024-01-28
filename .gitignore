@@ -105,6 +105,8 @@ gradle-app.setting
 .DS_Store
 Thumbs.db
 
+/out
+
 ## iOS
 /ios/xcode/*.xcodeproj/*
 !/ios/xcode/*.xcodeproj/xcshareddata
