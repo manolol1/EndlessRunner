@@ -13,8 +13,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import xyz.manolol.endlessrunner.Main;
 
-import java.util.Iterator;
-
 public class GameScreen extends ScreenAdapter {
     Main main;
     OrthographicCamera camera;
@@ -46,9 +44,8 @@ public class GameScreen extends ScreenAdapter {
 
     private float timeUntilDifficultyIncrease = DIFFICULTY_INCREASE_INTERVAL;
 
-    @Override
-    public void show() {
-        main = new Main();
+    public GameScreen(Main main) {
+        this.main = main;
         camera = new OrthographicCamera();
         viewport = new FitViewport(1920, 1080, camera);
         shapeRenderer = new ShapeRenderer();
