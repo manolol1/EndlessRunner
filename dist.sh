@@ -12,9 +12,8 @@ mkdir -p $OUTPUT_DIR
 
 # Build the signed APK
 ./gradlew android:assembleRelease
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $KEYSTORE_PATH android/build/outputs/apk/release/android-release-unsigned.apk $KEY_ALIAS
-mv android/build/outputs/apk/release/android-release-unsigned.apk $OUTPUT_DIR/$FILE_NAME.apk
+apksigner sign --ks $KEYSTORE_PATH --ks-key-alias $KEY_ALIAS --out $OUTPUT_DIR/$FILE_NAME.apk android/build/outputs/apk/release/android-release-unsigned.apk
 
 # Build the desktop jar
 ./gradlew desktop:dist
-mv desktop/build/libs/desktop-1.0.jar $OUTPUT_DIR/$FILE_NAME.jar
+cp desktop/build/libs/desktop-1.0.jar $OUTPUT_DIR/$FILE_NAME.jar
