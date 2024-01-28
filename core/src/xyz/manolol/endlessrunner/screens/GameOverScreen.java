@@ -47,32 +47,34 @@ public class GameOverScreen extends ScreenAdapter {
         VisLabel.LabelStyle labelStyle = VisUI.getSkin().get(Label.LabelStyle.class);
         VisTextButton.VisTextButtonStyle textButtonStyle = VisUI.getSkin().get(VisTextButton.VisTextButtonStyle.class);
 
-        labelStyle.font = fontManager.getFont(100);
+        labelStyle.font = fontManager.getFont(120);
         labelStyle.fontColor = Color.RED;
         VisLabel label1 = new VisLabel("GAME OVER", labelStyle);
         table.add(label1).pad(100).row();
 
         textButtonStyle.font = fontManager.getFont(80);
-        VisTextButton restartButton = new VisTextButton("Try Again!", textButtonStyle);
+        VisTextButton restartButton = new VisTextButton("Try Again", textButtonStyle);
         restartButton.pad(20);
+        restartButton.setFocusBorderEnabled(false);
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 main.setScreen(new GameScreen(main));
             }
         });
-        table.add(restartButton).pad(50).row();
+        table.add(restartButton).width(500).pad(50).row();
 
         textButtonStyle.font = fontManager.getFont(80);
-        VisTextButton mainMenuButton = new VisTextButton("Back to Main Menu", textButtonStyle);
+        VisTextButton mainMenuButton = new VisTextButton("Main Menu", textButtonStyle);
         mainMenuButton.pad(20);
+        mainMenuButton.setFocusBorderEnabled(false);
         mainMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 main.setScreen(new MainMenuScreen(main));
             }
         });
-        table.add(mainMenuButton);
+        table.add(mainMenuButton).width(500);
 
         table.padBottom(200); // move the whole table up a little bit
 

@@ -46,21 +46,34 @@ public class MainMenuScreen extends ScreenAdapter {
         VisLabel.LabelStyle labelStyle = VisUI.getSkin().get(Label.LabelStyle.class);
         VisTextButton.VisTextButtonStyle textButtonStyle = VisUI.getSkin().get(VisTextButton.VisTextButtonStyle.class);
 
-        labelStyle.font = fontManager.getFont(100);
+        labelStyle.font = fontManager.getFont(120);
         labelStyle.fontColor = Color.LIME;
         VisLabel label1 = new VisLabel("Endless Runner", labelStyle);
-        table.add(label1).pad(100).row();
+        table.add(label1).pad(80).row();
 
         textButtonStyle.font = fontManager.getFont(80);
-        VisTextButton startButton = new VisTextButton("Start Game", textButtonStyle);
+        VisTextButton startButton = new VisTextButton("Play", textButtonStyle);
         startButton.pad(20);
+        startButton.setFocusBorderEnabled(false);
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 main.setScreen(new GameScreen(main));
             }
         });
-        table.add(startButton);
+        table.add(startButton).width(500).pad(60).row();
+
+        textButtonStyle.font = fontManager.getFont(80);
+        VisTextButton exitButton = new VisTextButton("Exit", textButtonStyle);
+        exitButton.pad(20);
+        exitButton.setFocusBorderEnabled(false);
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+        });
+        table.add(exitButton).width(500);
 
         table.padBottom(200); // move the whole table up a little bit
 
