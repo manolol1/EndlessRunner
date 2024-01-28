@@ -17,6 +17,7 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import xyz.manolol.endlessrunner.Main;
 import xyz.manolol.endlessrunner.Utils.FontManager;
+import xyz.manolol.endlessrunner.Utils.PrefsManager;
 
 import java.util.Iterator;
 
@@ -26,6 +27,8 @@ public class GameScreen extends ScreenAdapter {
     private final OrthographicCamera camera;
     private final FitViewport viewport;
     private final ShapeRenderer shapeRenderer;
+
+    PrefsManager prefs;
 
     private final FontManager fontManager;
     private final Stage stage;
@@ -64,6 +67,8 @@ public class GameScreen extends ScreenAdapter {
         camera = new OrthographicCamera();
         viewport = new FitViewport(1920, 1080, camera);
         shapeRenderer = new ShapeRenderer();
+
+        prefs = new PrefsManager();
 
         player = new Rectangle(50, FLOOR_HEIGHT, PLAYER_SIZE, PLAYER_SIZE);
 

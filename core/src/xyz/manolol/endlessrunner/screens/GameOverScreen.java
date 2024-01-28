@@ -16,10 +16,12 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import xyz.manolol.endlessrunner.Main;
 import xyz.manolol.endlessrunner.Utils.FontManager;
+import xyz.manolol.endlessrunner.Utils.PrefsManager;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class GameOverScreen extends ScreenAdapter {
     private final FontManager fontManager;
+    private final PrefsManager prefs;
 
     private final OrthographicCamera camera;
     private final FitViewport viewport;
@@ -28,8 +30,8 @@ public class GameOverScreen extends ScreenAdapter {
     private final VisTable table;
 
     public GameOverScreen(Main main, int score) {
-
         fontManager = new FontManager("fonts/Ubuntu-Regular.ttf");
+        prefs = new PrefsManager();
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(1920, 1080, camera);
@@ -53,6 +55,17 @@ public class GameOverScreen extends ScreenAdapter {
         labelStyle2.fontColor = Color.WHITE;
         VisLabel label2 = new VisLabel("Score: " + score, labelStyle2);
         table.add(label2).pad(50).row();
+
+        Label.LabelStyle labelStyle3 = new Label.LabelStyle();
+        labelStyle3.font = fontManager.getFont(80);
+        labelStyle3.fontColor = Color.WHITE;
+        VisLabel label3 = new VisLabel("Highscore: " + prefs.getHighscore(), labelStyle3);
+        if (score > prefs.getHighscore()) {
+            prefs.setHighscore(score);
+            labelStyle3.fontColor = Color.GREEN;
+            label3 = new VisLabel("NEW Highscore: " + prefs.getHighscore(), labelStyle3);
+        }
+        table.add(label3).pad(50).row();
 
         textButtonStyle.font = fontManager.getFont(80);
         VisTextButton restartButton = new VisTextButton("Try Again", textButtonStyle);
