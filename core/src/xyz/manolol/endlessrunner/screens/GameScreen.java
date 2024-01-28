@@ -18,6 +18,8 @@ import com.kotcrab.vis.ui.widget.VisTable;
 import xyz.manolol.endlessrunner.Main;
 import xyz.manolol.endlessrunner.Utils.FontManager;
 
+import java.util.Iterator;
+
 public class GameScreen extends ScreenAdapter {
     Main main;
     OrthographicCamera camera;
@@ -114,16 +116,23 @@ public class GameScreen extends ScreenAdapter {
         // Spawn new Obstacles
         if (obstacles.peek().x < viewport.getWorldWidth() - (obstacleDistance + MathUtils.random(-250.0f, +200.0f))) {
             spawnObstacle(viewport.getWorldWidth());
-            score++;
         }
 
-        // Update obstacle positions
-        for (Rectangle obstacle : obstacles) {
+        // Update obstacle positions and remove old obstacles
+        Iterator<Rectangle> iter = obstacles.iterator();
+        while (iter.hasNext()) {
+            Rectangle obstacle = iter.next();
             obstacle.x -= obstacleSpeed * delta;
 
             if (obstacle.overlaps(player)) {
                 main.setScreen(new GameOverScreen(main, score));
                 return;
+            }
+
+            // If the obstacle is no longer visible, remove it
+            if (obstacle.x + obstacle.width < 0) {
+                iter.remove();
+                score++;
             }
         }
 
