@@ -17,11 +17,8 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 import xyz.manolol.endlessrunner.Main;
 import xyz.manolol.endlessrunner.Utils.FontManager;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class GameOverScreen extends ScreenAdapter {
-
-    private final Main main;
-    private final int score;
-
     private final FontManager fontManager;
 
     private final OrthographicCamera camera;
@@ -31,8 +28,6 @@ public class GameOverScreen extends ScreenAdapter {
     private final VisTable table;
 
     public GameOverScreen(Main main, int score) {
-        this.main = main;
-        this.score = score;
 
         fontManager = new FontManager("fonts/Ubuntu-Regular.ttf");
 

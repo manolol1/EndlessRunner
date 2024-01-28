@@ -20,16 +20,17 @@ import xyz.manolol.endlessrunner.Utils.FontManager;
 
 import java.util.Iterator;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class GameScreen extends ScreenAdapter {
-    Main main;
-    OrthographicCamera camera;
-    FitViewport viewport;
-    ShapeRenderer shapeRenderer;
+    private final Main main;
+    private final OrthographicCamera camera;
+    private final FitViewport viewport;
+    private final ShapeRenderer shapeRenderer;
 
     private final FontManager fontManager;
     private final Stage stage;
     private final VisTable table;
-    private VisLabel scoreLabel;
+    private final VisLabel scoreLabel;
 
     private final float GRAVITY = 400.0f;
     private final float JUMP_FORCE = 350.0f;
@@ -45,9 +46,9 @@ public class GameScreen extends ScreenAdapter {
     private final float PLAYER_SIZE = 50;
     private final float OBSTACLE_SIZE = 40;
 
-    private Rectangle player;
+    private final Rectangle player;
 
-    private Array<Rectangle> obstacles;
+    private final Array<Rectangle> obstacles;
 
     private float jumpForceLeft = 0;
 

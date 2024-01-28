@@ -17,9 +17,8 @@ import com.kotcrab.vis.ui.widget.VisTextButton;
 import xyz.manolol.endlessrunner.Main;
 import xyz.manolol.endlessrunner.Utils.FontManager;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class MainMenuScreen extends ScreenAdapter {
-    private final Main main;
-
     private final FontManager fontManager;
 
     private final OrthographicCamera camera;
@@ -29,8 +28,6 @@ public class MainMenuScreen extends ScreenAdapter {
     private final VisTable table;
 
     public MainMenuScreen(Main main) {
-        this.main = main;
-
         fontManager = new FontManager("fonts/Ubuntu-Regular.ttf");
 
         camera = new OrthographicCamera();
