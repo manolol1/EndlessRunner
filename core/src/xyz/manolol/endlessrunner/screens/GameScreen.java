@@ -120,8 +120,12 @@ public class GameScreen extends ScreenAdapter {
         }
 
         // Spawn new Obstacles
-        if (obstacles.peek().x < viewport.getWorldWidth() - (obstacleDistance + MathUtils.random(-250.0f, +200.0f))) {
+        if (obstacles.isEmpty()) {
             spawnObstacle(viewport.getWorldWidth());
+        } else {
+            if (obstacles.peek().x < viewport.getWorldWidth() - (obstacleDistance + MathUtils.random(-250.0f, +200.0f))) {
+                spawnObstacle(viewport.getWorldWidth());
+            }
         }
 
         // Update obstacle positions and remove old obstacles
