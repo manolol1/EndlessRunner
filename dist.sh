@@ -7,7 +7,10 @@ FILE_NAME="EndlessRunner"
 
 OUTPUT_DIR="out"
 
-# Create the output directory if it doesn't exist
+# remove/clear outpit directory
+rm -r $OUTPUT_DIR
+
+# Create the output directory
 mkdir -p $OUTPUT_DIR
 
 # Build the signed APK
