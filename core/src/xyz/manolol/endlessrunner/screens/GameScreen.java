@@ -35,15 +35,15 @@ public class GameScreen extends ScreenAdapter {
     private final VisTable table;
     private final VisLabel scoreLabel;
 
-    private final float GRAVITY = 400.0f;
+    private final float GRAVITY = 350.0f;
     private final float JUMP_FORCE = 350.0f;
     private final float JUMP_FORCE_DECREASE = 700.0f;
 
-    private final float OBSTACLE_SPEED_START = 200.0f;
+    private final float OBSTACLE_SPEED_START = 300.0f;
     private final float OBSTACLE_SPEED_INCREASE = 30.0f;
-    private final float OBSTACLE_DISTANCE_START = 1000.0f;
+    private final float OBSTACLE_DISTANCE_START = 1200.0f;
 
-    private final float DIFFICULTY_INCREASE_INTERVAL = 2.5f;
+    private final float DIFFICULTY_INCREASE_INTERVAL = 1f;
 
     private final float FLOOR_HEIGHT = 50;
     private final float PLAYER_SIZE = 50;
@@ -103,9 +103,9 @@ public class GameScreen extends ScreenAdapter {
         if (player.y > FLOOR_HEIGHT) player.y -= GRAVITY * delta;
 
         if ((Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched()) && player.y <= FLOOR_HEIGHT) {
-            jumpForceLeft = JUMP_FORCE + GRAVITY;
+            player.y += JUMP_FORCE;
         }
-        if (jumpForceLeft >= 0) {
+        if (jumpForceLeft > 0) {
             player.y += jumpForceLeft * delta;
             jumpForceLeft -= JUMP_FORCE_DECREASE * delta;
         }
@@ -115,7 +115,7 @@ public class GameScreen extends ScreenAdapter {
 
         if (timeUntilDifficultyIncrease <= 0) {
             obstacleSpeed += OBSTACLE_SPEED_INCREASE;
-            obstacleDistance += OBSTACLE_SPEED_INCREASE - 2;
+            obstacleDistance += OBSTACLE_SPEED_INCREASE;
             timeUntilDifficultyIncrease = DIFFICULTY_INCREASE_INTERVAL;
         }
 
