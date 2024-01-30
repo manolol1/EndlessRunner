@@ -103,7 +103,7 @@ public class GameScreen extends ScreenAdapter {
         if (player.y > FLOOR_HEIGHT) player.y -= GRAVITY * delta;
 
         if ((Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isTouched()) && player.y <= FLOOR_HEIGHT) {
-            player.y += JUMP_FORCE;
+            jumpForceLeft = JUMP_FORCE + GRAVITY;
         }
         if (jumpForceLeft > 0) {
             player.y += jumpForceLeft * delta;
