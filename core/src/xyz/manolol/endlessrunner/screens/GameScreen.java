@@ -35,12 +35,12 @@ public class GameScreen extends ScreenAdapter {
     private final VisTable table;
     private final VisLabel scoreLabel;
 
-    private final float GRAVITY = 350.0f;
-    private final float JUMP_FORCE = 350.0f;
-    private final float JUMP_FORCE_DECREASE = 700.0f;
+    private final float GRAVITY = 450.0f;
+    private final float JUMP_FORCE = 400.0f;
+    private final float JUMP_FORCE_DECREASE = 1000.0f;
 
     private final float OBSTACLE_SPEED_START = 300.0f;
-    private final float OBSTACLE_SPEED_INCREASE = 30.0f;
+    private final float OBSTACLE_SPEED_INCREASE = 20.0f;
     private final float OBSTACLE_DISTANCE_START = 1200.0f;
 
     private final float DIFFICULTY_INCREASE_INTERVAL = 1f;
