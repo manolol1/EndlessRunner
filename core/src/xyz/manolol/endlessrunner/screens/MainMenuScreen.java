@@ -15,11 +15,13 @@ import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import xyz.manolol.endlessrunner.Main;
-import xyz.manolol.endlessrunner.Utils.FontManager;
+import xyz.manolol.endlessrunner.utils.FontManager;
+import xyz.manolol.endlessrunner.utils.PrefsManager;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class MainMenuScreen extends ScreenAdapter {
     private final FontManager fontManager;
+    private final PrefsManager prefs;
 
     private final OrthographicCamera camera;
     private final FitViewport viewport;
@@ -29,6 +31,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
     public MainMenuScreen(Main main) {
         fontManager = new FontManager("fonts/Ubuntu-Regular.ttf");
+        prefs = new PrefsManager();
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(1920, 1080, camera);
@@ -39,14 +42,19 @@ public class MainMenuScreen extends ScreenAdapter {
         table = new VisTable();
         table.setFillParent(true);
 
-        // Get the default styles
-        VisLabel.LabelStyle labelStyle = new Label.LabelStyle();
         VisTextButton.VisTextButtonStyle textButtonStyle = VisUI.getSkin().get(VisTextButton.VisTextButtonStyle.class);
 
-        labelStyle.font = fontManager.getFont(120);
-        labelStyle.fontColor = Color.LIME;
-        VisLabel label1 = new VisLabel("Endless Runner", labelStyle);
-        table.add(label1).pad(80).row();
+        VisLabel.LabelStyle labelStyle1 = new Label.LabelStyle();
+        labelStyle1.font = fontManager.getFont(120);
+        labelStyle1.fontColor = Color.LIME;
+        VisLabel label1 = new VisLabel("Endless Runner", labelStyle1);
+        table.add(label1).pad(10).row();
+
+        VisLabel.LabelStyle labelStyle2 = new Label.LabelStyle();
+        labelStyle2.font = fontManager.getFont(80);
+        labelStyle2.fontColor = Color.WHITE;
+        VisLabel label2 = new VisLabel("Highscore: " + prefs.getHighscore(), labelStyle2);
+        table.add(label2).pad(50).row();
 
         textButtonStyle.font = fontManager.getFont(80);
         VisTextButton startButton = new VisTextButton("Play", textButtonStyle);
@@ -58,7 +66,20 @@ public class MainMenuScreen extends ScreenAdapter {
                 main.setScreen(new GameScreen(main));
             }
         });
-        table.add(startButton).width(500).pad(60).row();
+        table.add(startButton).width(650).padBottom(50).row();
+
+        textButtonStyle.font = fontManager.getFont(80);
+        VisTextButton resetButton = new VisTextButton("Reset Highscore", textButtonStyle);
+        resetButton.pad(20);
+        resetButton.setFocusBorderEnabled(false);
+        resetButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                prefs.setHighscore(0);
+                label2.setText("Highscore: " + prefs.getHighscore());
+            }
+        });
+        table.add(resetButton).width(650).padBottom(50).row();
 
         textButtonStyle.font = fontManager.getFont(80);
         VisTextButton exitButton = new VisTextButton("Exit", textButtonStyle);
@@ -70,9 +91,9 @@ public class MainMenuScreen extends ScreenAdapter {
                 Gdx.app.exit();
             }
         });
-        table.add(exitButton).width(500);
+        table.add(exitButton).width(650);
 
-        table.padBottom(200); // move the whole table up a little bit
+        table.padBottom(50); // move the whole table up a little bit
 
         stage.addActor(table);
     }

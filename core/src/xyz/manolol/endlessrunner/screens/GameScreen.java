@@ -16,8 +16,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import xyz.manolol.endlessrunner.Main;
-import xyz.manolol.endlessrunner.Utils.FontManager;
-import xyz.manolol.endlessrunner.Utils.PrefsManager;
+import xyz.manolol.endlessrunner.utils.FontManager;
+import xyz.manolol.endlessrunner.utils.PrefsManager;
 
 import java.util.Iterator;
 

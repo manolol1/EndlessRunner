@@ -1,4 +1,4 @@
-package xyz.manolol.endlessrunner.Utils;
+package xyz.manolol.endlessrunner.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
