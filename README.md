@@ -1,3 +1,5 @@
+# This repository was moved to https://forgejo.manolol.xyz/mario/EndlessRunner
+
 # EndlessRunner
 
 Endless Runner game *(similar to the Chrome T-Rex game, just worse)*, made with libGDX.
